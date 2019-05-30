@@ -5,7 +5,7 @@ function binarySearch(arr, find){
 
     let middlePoint = Math.floor((start+stop)/2)
 
-    while (arr[middlePoint] !== find && start < stop){
+    while (arr[middlePoint] !== find && start <= stop){
         if(arr[middlePoint] > find){
             stop = middlePoint - 1
         }else{
@@ -16,37 +16,59 @@ function binarySearch(arr, find){
     return arr[middlePoint] === find ? middlePoint : -1
 }
 
-let tests = []
 
-function binaryTest({array, find, expect}){
+function binaryTest({array, find, expect, name}){
     const result = binarySearch(array, find)
     if(result === expect)
-        console.log('binaryTest Passed!')
+        console.log(`binaryTest[${name}] Passed!`)
     else
-        throw new Error(`binaryTest Fail. ${result} returned but ${expect} expected`)
+        throw new Error(`binaryTest[${name}] Fail with. ${array} to find ${find} ${result} returned but ${expect} expected`)
 }
 
 binaryTest({
     array: [1,2,3,4,5],
     find : 2,
-    expect: 1
+    expect: 1,
+    name : 'Basic test',
 })
 
-// Обработаем варианты, при которых функция вернет -1
-//(т.к мы ищем индекс элемента и в случве успеха функция вернет число, было бы неправильно возвращать что-то вроде false или undefined в случае неудачи)
 
 binaryTest({
-    array: [], //Ага. Найден первый баг. (Я этого не планировал). Добавим в функцию исключение для пустых массивов
+    array: [],
     find : 2,
-    expect: -1
+    expect: -1,
+    name : 'Empty Array test',
 })
 
 
 binaryTest({
-    array: [1,2,3,4], //Ага. Еще один баг. (Уже запланированный. Чтобы показать, что я понимаю, чем полезны тесты :з) В функции не хватает одно важного условия. 
+    array: [1,2,3,4], 
     find : 8,
-    expect: -1
+    expect: -1,
+    name : 'Incorrect number to find test',
 })
+ // Отсавим эти тесты тут как самыек важные и немного поиграем. 
+ // Очень неудобно самому придумывать значения массивов для тестов. Давайте оставим это тестам 
 
-// Все тесты успешно пройдены! Можно было бы остановиться на этом. В письмы не просиле не скатываться в оверинжиниринг, но позволю себе немного автоматизировать тесты в следующем коммите.
+ function createTest(size){
+    let indexToFind = Math.floor(Math.random()*(size-1)) // Пусть числа будут в диапазоне от 0 до 1000. Больше не надо.
+    let arr = Array(size).fill().map(x=>{
+        let number = (Math.random()*1000)
+        number *= Math.random() > 0.5 ? 1 : -1 // Они же еще могут быть отрицательными! Тогда в диапазоне |x| < 1000  
+        return +number.toFixed(2)  // Пусть чила будут маскимум с 2 знаками после запятой. Ну просто так красивее.
+    })
+    arr.sort((a,b)=>a-b) // Не забудем отсортировать массив. 
+    return {
+        array: arr,
+        find: arr[indexToFind], 
+        expect: indexToFind,
+        name : 'Automated Test'
+    }
+ }
+
+let tests = Array(10).fill().map(x=>createTest(5))
+tests.forEach(binaryTest)
+
+// Можно было бы доработать еще немного эти тесты. Но мне кажется это уже перебор. 
+
 
