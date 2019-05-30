@@ -1,5 +1,11 @@
+// Это конечная реализация функции бинарного поиска  с тестами!
+
+//Вы можете просмотреть историю коммитов. В Каждой версии я писал немного о своих мыслях в процессе разработки
+
+//Думаю, сейчас для вас ход моих мыслей не менее важен, чем код в конце. Милости прошу в историю разработки тестовой задачки для Wrike ^^
+
+
 function binarySearch(arr, find){
-    if(arr.length === 0 ) return -1
     let start = 0
     let stop = arr.length - 1
 
@@ -47,17 +53,15 @@ binaryTest({
     expect: -1,
     name : 'Incorrect number to find test',
 })
- // Отсавим эти тесты тут как самыек важные и немного поиграем. 
- // Очень неудобно самому придумывать значения массивов для тестов. Давайте оставим это тестам 
 
  function createTest(size){
-    let indexToFind = Math.floor(Math.random()*(size-1)) // Пусть числа будут в диапазоне от 0 до 1000. Больше не надо.
+    let indexToFind = Math.floor(Math.random()*(size-1))
     let arr = Array(size).fill().map(x=>{
         let number = (Math.random()*1000)
-        number *= Math.random() > 0.5 ? 1 : -1 // Они же еще могут быть отрицательными! Тогда в диапазоне |x| < 1000  
-        return +number.toFixed(2)  // Пусть чила будут маскимум с 2 знаками после запятой. Ну просто так красивее.
+        number *= Math.random() > 0.5 ? 1 : -1  
+        return +number.toFixed(2) 
     })
-    arr.sort((a,b)=>a-b) // Не забудем отсортировать массив. 
+    arr.sort((a,b)=>a-b)  
     return {
         array: arr,
         find: arr[indexToFind], 
@@ -69,6 +73,5 @@ binaryTest({
 let tests = Array(10).fill().map(x=>createTest(5))
 tests.forEach(binaryTest)
 
-// Можно было бы доработать еще немного эти тесты. Но мне кажется это уже перебор. 
 
 
