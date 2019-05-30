@@ -4,11 +4,10 @@
 
 //Думаю, сейчас для вас ход моих мыслей не менее важен, чем код в конце. Милости прошу в историю разработки тестовой задачки для Wrike ^^
 
-
 function binarySearch(arr, find){
-    let start = 0
+    let start = 0 
     let stop = arr.length - 1
-
+    
     let middlePoint = Math.floor((start+stop)/2)
 
     while (arr[middlePoint] !== find && start <= stop){
