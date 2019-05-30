@@ -1,12 +1,26 @@
-function binarySearch(arr){
+function binarySearch(arr, find){
+    let start = 0
+    let stop = arr.length - 1
 
+    let middlePoint = Math.floor((start+stop)/2)
+
+    while (arr[middlePoint] !== find){
+        if(arr[middlePoint] > find){
+            stop = middlePoint - 1
+        }else{
+            start = middlePoint + 1  
+        }
+        middlePoint = Math.floor((start+stop)/2)
+    }
+    return arr[middlePoint] === find ? middlePoint : -1
 }
 
 function binaryTest({array, find, expect}){
-    if(binarySearch(array, find) === expect)
+    const result = binarySearch(array, find)
+    if(result === expect)
         console.log('binaryTest Passed!')
     else
-        throw new Error('binaryTest Fail')
+        throw new Error(`binaryTest Fail. ${result} returned but ${expect} expected`)
 }
 
 binaryTest({
@@ -15,8 +29,8 @@ binaryTest({
     expect: 1
 })
 
-// Думаю, вам интересно было бы проследить логику моих рассуждений, раз уж это тестовая задачка:
-// Бинарный поиск это не очень сложный алгоритм. Который работает только для отсортированных списков (массивов).
-// Раз уж в задании необходимо написать тесты для функции, воспользуемся популярной методологией и напишем значала простенький тест а потом уже приступим к самой функции!
-// Можно было бы использовать всякого рода библиотеки для тестирования вроде Jest. Но мне показалось, что это немного overhead для тестового задания. 
-// Думаю, важнее показать, что я понимаю принцип работы автоматизированных тестов, а не знание конекретных инструментов.
+// Теперь приступим к самой функции. И так. Раз уж мы выполняем банарный поиск. Будем считать, что массив, передаваемыв в функцию изначально отсортирован
+// Будем исползовать массив с числами, потому что так нагляднее. Хотя, если данные отсортированы, они могут быть любыми.
+
+//Думаю, нет смысла разбивать написание функции на коммиты.
+//О чудо! Тест работает. Напишем еще... 
